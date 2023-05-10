@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+	function confirmDelete() {
+		if (confirm("정말로 이 글을 삭제하시겠습니까?")) {
+			window.location.href = "{% url 'blog:delete' blog_post.slug %}";
+		} else {
+			return false;
+		}
+	}
+</script>
+
+<style type="text/css">
+	.card{
+		max-width: 900px;
+	}
+	.card-body{
+		padding: 20px;
+	}
+	
+	.post-title {
+		width: 70%;
+	}
+	
+	.post-title a {
+		color: black;
+		text-decoration: none;
+	}
+	
+	.post-title a:hover {
+		color: darkgray;
+	}
+	
+	.table-custom {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	
+	.table-custom th,
+	.table-custom td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+	
+	.table-custom th {
+		text-align: center;
+		background-color: #f2f2f2;
+		color: black;
+	}
+	
+</style>
+
+<div class="container">
+	<div class="row">
+		<!-- Blog Post -->
+		<div class="card m-auto">
+			<div class="card-body mt-2">
+				<h2 class="card-title text-center">{{ blog_post.title }}</h2>
+			</div>
+			<div class="card-footer border-bottom text-muted d-flex justify-content-between">
+				<div class="align-self-end">작성자: {{ blog_post.author.first_name }}</div>
+				<div class="align-self-start">업데이트: {{ blog_post.date_updated|date:"Y년 m월 d일" }}</div>
+			</div>
+			{% if blog_post.image %}
+			<img src="{{ blog_post.image.url }}">
+			{% endif %}
+			<div class="card-body mt-2 mb-2">
+				<div class="d-flex flex-column">
+					<p class="card-text mb-3 fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">{{ blog_post.body|safe }}</p>
+					{% if blog_post.author == request.user %}
+					<div class="text-center">
+						<a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary">글 수정</a>
+						<form method="post" action="{% url 'blog:delete' blog_post.slug %}" class="d-inline">
+							{% csrf_token %}
+							<a href="#" class="btn btn-danger" onclick="confirmDelete()">글 삭제</a>
+						</form>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Blog posts list -->
+<div class="container mt-4">
+	<div class="row justify-content-center">
+		<div class="left-column col-lg-8">
+			<div class="text-center">
+				<br><br>
+				<h5><strong>다른 글 보기</strong></h5>	
+				<br>
+				<div class="table-responsive">
+					<table class="table table-custom">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">제목</th>
+								<th scope="col">작성자</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if blog_posts %}
+							{% for post in blog_posts %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td class="post-title">
+									{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post table_view=True %}
+								</td>
+								<td>{{ post.author }}</td>
+							</tr>
+							{% endfor %}
+							{% else %}
+							<tr>
+								<td colspan="4">포스트가 없습니다.</td>
+							</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+				{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock content %}

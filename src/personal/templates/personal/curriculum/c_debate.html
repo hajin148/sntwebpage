@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .navbar-nav .nav-item:hover .nav-link {
+        color: #ffffff;
+        background-color: #222222;
+    }
+    
+    .navbar-nav .nav-item .nav-link {
+        font-size: 18px;
+    }
+    .navbar-nav .nav-item.active .nav-link {
+        background-color: #CCCCCC;
+    }
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+    
+</style>
+<div class="text-center">
+    <h2 class="h3 mb-3 fw-normal">커리큘럼</h2>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-color border-bottom">
+    <button class="navbar-toggler ml-auto navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'curriculum' %}">Academic Reading & Writing </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'curc' %}">Current Issue</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'curl' %}">Literature Essay</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'curd' %}"">Debate</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br><br>
+<div class="pricing-header p-1 pb-md-4 mx-auto text-center">
+    <img class="img-fluid mx-auto d-block" src="{% static 'curriculum/d/1.jpg' %}">
+    <img class="img-fluid mx-auto d-block" src="{% static 'curriculum/d/2.jpg' %}">
+    <br><br>
+    <h4><strong>SNT Debate 수업은 어떤건가요?</strong></h4>
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;"> 
+        Debate & Discuss는 총 12권의 테마가 있습니다.
+        SNT 제주의 디베이트 프로그램은 매 달 하나의 테마를 가지고
+        매 주 새로운 주제에 대해 찬반으로 토론하는 수업입니다.
+        
+        본 프로그램은 아이들이 주어진 주제에 대한 배경 지식을 쌓고,
+        토론에 연관된 개인, 단체, 기관들의 입장을 고민해보고,
+        찬성과 반대의 대립적인 딜레마를 균형있게 생각해보게 합니다.
+        
+        따라서 학생들이 매 주 하나의 토론을 할 때마다
+        1) 큰 테마에 관련된 배경지식을 하나씩 익히고,
+        2) 배정된 팀원들과 협력하여 설득력있는 케이스를 짜보고,
+        3) 아이들 앞에서 짜임새있게 정리된 4분 스피치를 해봄으로써
+        논리적으로 생각하는 힘을 길러줍니다.
+        
+        ​뿐만 아니라,
+        대략 3개월 주기로 다양한 국내외 대회의 참가 기회를 통해
+        목표를 향한 새로운 도전과 승패를 통한 경험을 할 수 있으며,
+        전세계를 무대로 뻗어나갈 수 있는 발판을 마련하게 됩니다.
+
+        Debate 자체 교재 구성:
+        1) 4주 차 토론 주제에 대한 찬반 의견
+        2) Vocabulary 정리
+        3) 주제에 대한 주관식 질문
+        4)마인드맵 (내용 정리)
+        (교재 레벨에 따라 일부 구성이 바뀔 수 있습니다)
+        
+        SNT 제주의 디베이트 프로그램은 
+        그동안 다양한 대회 참가와 연구를 통해 쌓아온
+        데이터를 기반으로 다양한 시리즈의 교재를 학생들에게 제공하며
+        구성원의 수준에 맞게 토론 경기가 진행될 수 있도록
+        토론 주제를 구성합니다.
+        
+        또한, 학생들이 꼭 알아야할 클래식한 토론 주제와 
+        최근 시사이슈를 바탕으로 한 새로운 주제들을 바탕으로
+        꾸준히 교재 개발을 하고 있습니다.
+        
+        수업을 위한 기본 숙제:
+        1)주차별 자체 교재 읽어오기.
+        2) 주차별 단어 외워오기 (리스트 제공)
+        3) 지난 주 토론 주제에 대한 찬반 케이스 정리하기.
+    </p>
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">
+        *카카오톡채널: <a href="http://pf.kakao.com/_qxixcxhxj/chat">카카오톡</a> 
+        *신규생은 <a href="{% url 'leveltest' %}">입반테스트</a> 필수입니다. 예약 후 방문해 주세요.
+    </p>
+</div>
+
+
+{% endblock content %}

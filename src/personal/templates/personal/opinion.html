@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style type="text/css">
+	
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
+	
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+
+	@media (max-width: 768px) {
+    .upload-date {
+        display: none;
+    }
+}
+
+
+	.post-title {
+		width: 60%;
+	}
+	
+	.post-title a {
+		color: black;
+		text-decoration: none;
+		
+	}
+	
+	.post-title a:hover {
+		color: darkgray;
+	}
+	
+	
+	.search-bar {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end; /* Updated this line */
+	}
+	
+	
+	.blog-post-container{
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+	
+	.left-column{
+		padding:0px;
+	}
+	
+	.right-column{
+		padding:0px;
+	}
+	
+	
+	.search-bar input {
+		flex: 1;
+		margin-right: 5px;
+	}
+	
+	.lead{
+		font-size: 17px;
+	}
+	
+	.table-custom {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+
+	.table-custom th,
+	.table-custom td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+	
+	.table-custom th {
+		text-align: center;
+		background-color: #f2f2f2;
+		color: black;
+	}
+
+	
+</style>
+
+
+<!-- main content -->
+<div class="text-center">
+	<h2 class="h3 mb-3 fw-normal">오피니언 게시판</h2>
+	<div class="container">
+		<div class="row justify-content-center">
+			
+			<!-- blog feed -->
+			<div class="left-column col-lg-9">
+				<div class="text-center">			
+					<!-- end Top 'create post' bar -->
+					
+					<!-- Search bar -->
+					<div class="search-bar mt-sm-2 mb-2">
+						<form class="form-inline d-flex" method="get">
+							<input class="form-control mr-sm-2" type="text" name="q" id="id_q" placeholder="검색">
+							<button class="btn btn-primary" type="submit">검색</button>
+						</form>
+					</div>
+					
+					<!-- End Search bar -->
+					
+					<!-- Blog posts-->
+					<div class="table-responsive">
+						<table class="table table-custom border-top">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">제목</th>
+									<th scope="col" class="upload-date">날짜</th>
+									<th scope="col">작성자</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if blog_posts %}
+								{% for post in blog_posts %}
+								<tr>
+									<td>{{ forloop.counter }}</td>
+									<td class="post-title">
+										{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post table_view=True %}
+									</td>
+									<td class="upload-date">{{ post.date_updated|date:"Y년 m월 d일" }}</td>
+									<td>{{ post.author.first_name }}</td>
+								</tr>
+								{% endfor %}							
+								{% else %}
+								<tr>
+									<td colspan="4">포스트가 없습니다.</td>
+								</tr>
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+					<!-- End Blog posts-->
+					{% if user.is_authenticated %}
+					{% if user.is_staff or user.is_admin or user.is_superuser %}
+					<div class="d-flex justify-content-end">
+						<p><a class="btn btn-primary" href="{% url 'blog:create' %}">글쓰기</a></p>
+					</div>
+					{% endif %}
+					{% endif %}
+					<!-- Pagination -->
+					{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+				</div>
+				
+			</div>
+			<!-- end blog feed -->
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock content %}

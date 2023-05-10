@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<style type="text/css">
+	
+	.create-form {
+		width: 100%;
+		max-width: 100%;
+		padding: 15px;
+		margin: auto;
+		display: flex; /* Add this line */
+		flex-direction: column; /* Add this line */
+	}
+	
+	.submit-button {
+		max-width: 200px;
+		align-self: flex-end; /* Add this line */
+	}
+	
+	.image {
+		opacity: 1;
+		transition: .5s ease;
+		backface-visibility: hidden;
+	}
+	
+	.middle {
+		transition: .5s ease;
+		opacity: 0;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		
+	}
+	.image-group{
+		position: relative;
+		text-align: center;
+		cursor:pointer;
+	}
+	
+	.image-group:hover .image {
+		opacity: 0.3;
+	}
+	
+	.image-group:hover .middle {
+		opacity: 1;
+	}
+	
+	.text {
+		margin: auto;
+		background-color: #4CAF50;
+		color: white;
+		font-size: 15px;
+		padding: 15px;
+	}
+</style>
+<div class="text-center">
+	<h2 class="h3 mb-3 fw-normal">수정하기</h2>
+</div>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-9">
+			
+			{% if success_message %}
+			<h3 style="color:green; text-align: center;">{{success_message}}</h3>
+			{% endif %}
+			
+			<form class="create-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+				
+				<!-- title -->
+				<div class="form-group">
+					<label for="id_title">제목</label>
+					<input class="form-control" type="text" name="title" id="id_title" placeholder="제목" value="{{form.initial.title}}" required autofocus>
+				</div>
+				<!-- Image -->
+				<div class="form-group image-group" id="id_image_group">
+					{% if form.initial.image %}
+					<img class="img-fluid image" src="{{form.initial.image.url}}" id="id_image_display">
+					{% endif %}
+					<div class="middle">
+						<div class="text">사진 변경</div>
+					</div>
+				</div>
+				<input type="file" name="image" id="id_image_file" accept="image/*" onchange="readURL(this)">
+				<br>
+				<!-- Body -->
+				<div class="form-group">
+					<label for="id_body">내용</label>
+					<textarea class="form-control" rows="10" type="text" name="body" id="summernote" placeholder="내용" 
+					required>{{form.initial.body}}</textarea>
+					<script>
+						$(document).ready(function() {
+							$('#summernote').summernote({
+								height: 500,                 
+								minHeight: 200,             
+								maxHeight: 1000,             
+								focus: true,
+								toolbar: [
+                                ['style', ['style']],
+                                ['font', ['bold', 'underline', 'clear']],
+                                ['fontname', ['fontname']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['table', ['table']],
+                                ['insert', ['link', 'video']], // Remove 'picture' from this array
+                                ['view', ['fullscreen', 'codeview', 'help']],
+                                ],                   
+							});
+						});
+					</script>
+				</div>
+				
+				
+				{% for field in form %}
+				<p>
+					{% for error in field.errors %}
+					<p style="color: red">{{ error }}</p>
+					{% endfor %}
+				</p>
+				{% endfor %}
+				{% if form.non_field_errors %}
+				<div style="color: red">
+					<p>{{form.non_field_errors}}</p>
+				</div>
+				{% endif %}
+				
+				<!-- Submit btn -->
+				<div class="text-center">
+					<button class="submit-button btn btn-lg btn-primary btn-block" type="submit">수정하기</button>
+				</div>
+				
+			</form>	
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	document.getElementById('id_image_group').onclick = function(event){
+		document.getElementById('id_image_file').click();
+	};
+	
+	function readURL(input){
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('#id_image_display')
+			.attr('src', e.target.result)
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+</script>
+
+{% endblock content %}

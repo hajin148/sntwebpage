@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .navbar-nav .nav-item:hover .nav-link {
+        color: #ffffff;
+        background-color: #222222;
+    }
+    
+    .navbar-nav .nav-item .nav-link {
+        font-size: 18px;
+    }
+    .navbar-nav .nav-item.active .nav-link {
+        background-color: #CCCCCC;
+    }
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+
+    
+</style>
+<div class="text-center">
+    <h2 class="h3 mb-3 fw-normal">정규 스케줄</h2>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-color border-bottom">
+    <button class="navbar-toggler ml-auto navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'schedule' %}">G7+ / Y8+</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g6' %}">G6 / Y7</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g5' %}">G5 / Y6</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g4' %}">G4 / Y5</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'g3' %}">G3 / Y4</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br><br>
+<div class="pricing-header p-1 pb-md-4 mx-auto text-center">
+    <img class="img-fluid mx-auto d-block" src="{% static 'schedule/g3/1.png' %}" width="600px">
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">    
+        저학년 초등학생에게 가장 중요한 
+        독서 습관,
+        책을 통한 간접 경험,
+        공감능력, 사고력, 
+        배경지식 확장은 
+        
+        단순 다독,
+        영어도서관식 수업 
+        장르 편식으로는 어렵습니다. 
+
+        Debator 출신 원장님의
+        날카로운 
+        관점있는 질문들은 
+        혼자서 읽을 때는 파악할 수 없었던 
+        책 속에 담긴 작가의 철학 
+        배경지식 
+        문학적 요소들을 
+        스스로 깨달을 수 있도록 이끌어 줍니다. 
+        
+        G3 Novel 자체 교재 구성:
+        1) 4주 차 진도별 Vocabulary List
+        2) Vocabulary Practice
+        3) Comprehension 객관식 & 주관식 질문
+        4) 외부 article과 comprehension questions
+        5) Essay Prompts
+        
+        수업을 위한 기본 숙제:
+        1) 주차별 가이드에 따라 책 읽어오기.
+        2) 주차별 단어 외워오기.
+        3) 주차별 객관식 & 주관식 질문에 답해오기.
+        4) 2주차 & 4주차 에세이 완성해오기.
+        
+        ​모든 에세이에 꼼꼼한 첨삭과 피드백이 나갑니다.
+    </p>
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">
+        *카카오톡채널: <a href="http://pf.kakao.com/_qxixcxhxj/chat">카카오톡</a> 
+        *신규생은 <a href="{% url 'leveltest' %}">입반테스트</a> 필수입니다. 예약 후 방문해 주세요.
+    </p>
+</div>
+
+
+{% endblock content %}

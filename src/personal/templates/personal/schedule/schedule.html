@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .navbar-nav .nav-item:hover .nav-link {
+        color: #ffffff;
+        background-color: #222222;
+    }
+    
+    .navbar-nav .nav-item .nav-link {
+        font-size: 18px;
+    }
+    .navbar-nav .nav-item.active .nav-link {
+        background-color: #CCCCCC;
+    }
+    .navbar-collapse {
+        margin-top: 1rem;
+    }
+    
+</style>
+<div class="text-center">
+    <h2 class="h3 mb-3 fw-normal">정규 스케줄</h2>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-color border-bottom">
+    <button class="navbar-toggler ml-auto navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'schedule' %}">G7+ / Y8+</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g6' %}">G6 / Y7</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g5' %}">G5 / Y6</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g4' %}">G4 / Y5</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'g3' %}">G3 / Y4</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<br><br>
+<div class="pricing-header p-1 pb-md-4 mx-auto text-center">
+    <img class="img-fluid mx-auto d-block" src="{% static 'schedule/g7/1.png' %}">
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">    
+        디베이트는 부담스럽고
+        책 읽기는 싫어하고
+        이과적 성향이 좀 더 강하고
+        내신 수업만으로 +α 를 얻기는 부족하고
+        High/Senior 로 올라가기 전에 학교 공부 외 뭔가는 해야할 것 같은데...라고 고민하신다면
+        바로 Current Issue 수업입니다
+        
+        사회, 경제, 정치, 국제관계등 여러 분야의
+        현 쟁점들을 The Economist, Time, New York Times, The Guardian 등의 기사를 통해 알아갑니다.
+        
+        ​위 일/주/월간지의 기사를 제대로 읽는 건 쉽지 않습니다.
+        에디터들의 풍자와 비판, 미묘한 뉘앙스를 파악하면서
+        사실 정보와 글쓴이의 의견을 구별하며
+        진짜 영어 독해력을 키울 수 있습니다.
+        고급 영단어와 문체를 배우고,
+        다양한 배경지식을 쌓고,
+        이를 바탕으로 자신의 글을 작성하다 보면
+        자연스럽게 문해력이 키워질 수 밖에 없습니다.
+        
+        학생들이 아티클을 하나씩 읽을 때마다
+        한 이슈만 기억하는 것이 아니라
+        1) 제공된 아티클과 관련된 큰 테마, 
+        2) 아티클에서 언급하지 않은 다양한 이해관계자들과의 관계,
+        3) 시대적, 사회적, 문화적 역사적 배경 등을 함께 배우고
+        4) 자신만의 관점을 에세이에 녹여넣을 수 있도록 훈련하여 
+        
+        ​수업의 모든 과정이 자신만의 자산이 될 수 있도록 이끌어줍니다.
+        
+        그리고 다양한 배경지식을 가지고
+        논지를 펼쳐가는 글쓰기 연습은
+        자연스럽게 EE 와 AP Capstone 으로 연결 될 수 밖에 없습니다.
+        주제 선정부터 비판적, 논리적 사고로 탄탄하게 다듬어진
+        일목요연한 에세이를 써낼 수 있는 힘을 길러줍니다.
+        입시와 직결되는 유의미한 EC 들을 수행하기 위해서는
+        학생 자신의 기본기가 탄탄해야 합니다.
+        
+        ​영어능력과 사고력이 바탕이 되어야
+        어떤 교과외 활동을 하더라도 본인의 것으로 소화할 수 있습니다.
+        SNT 는 그 기본기를 확실하게 다져줍니다.
+        Academic Reading & Writing 은 어떤 수업인가요?
+        중고등을 위한 Academic Reading and Writing
+        SSAT Upper, SAT, ACT, TOEFL등 
+        표준화 시험을 대비할 할 수 있는 
+        Critical Reading 실력을 키우는 수업입니다. 
+        
+        ​지문을 꼼꼼하게
+        Line by Line 분석을 하기도 하고,
+        Skimming 을 통한 Main Idea 와 Key words 를 찾아 가며 읽는 훈련,
+        Annotation 하며 읽기, 
+        글의 구조,
+        글쓴이의 의도를 
+        파악하며 읽는 연습을 합니다. 
+        
+        빠르고 정확한 독해력을 키우는 수업입니다. 
+        느낌, 감으로 문제를 푸는 것이 아닌
+        Evidence Based, 
+        지문 속에서 정확한 답을 찾아내는 능력을 키웁니다.
+        
+        Essay Writing 은 
+        시사, 사회, 정치, 국제관계등의 주제를 활용한 Prompt로 
+        Argumentative Essay, 
+        Analytical Essay, 
+        작성을 하고, 
+        
+        수업 중 Peer Editing과 
+        선생님의 꼼꼼한 첨삭이 함께 이뤄집니다. 
+
+        수업을 위한 기본 숙제:​
+        1) Vocab 암기
+        2) Essay Writing 
+        
+        모든 에세이에 꼼꼼한 첨삭과 피드백이 나갑니다.
+    </p>
+    <p class="fs-9 text-body-secondary-dark" style="white-space: pre-line; margin: 2rem;">
+        *카카오톡채널: <a href="http://pf.kakao.com/_qxixcxhxj/chat">카카오톡</a> 
+        *신규생은 <a href="{% url 'leveltest' %}">입반테스트</a> 필수입니다. 예약 후 방문해 주세요.
+    </p>
+</div>
+
+
+{% endblock content %}

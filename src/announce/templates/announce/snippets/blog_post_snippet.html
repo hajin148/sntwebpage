@@ -1,0 +1,39 @@
+{% if blog_post %}
+{% if table_view %}
+<!-- For table view -->
+<div>
+    <a class="blog-post-title" href="{% url 'announce:detail' blog_post.slug %}">{{ blog_post.title }}</a>
+</div>
+{% else %}
+<!-- For normal view -->
+<div class="container">
+    <div class="row">
+        <!-- Blog Post -->
+        <div class="card m-auto">
+            <div class="card-body mt-2 mb-2">
+                <a href="{% url 'announce:detail' blog_post.slug %}">
+                    <h2 class="card-title">{{ blog_post.title }}</h2>
+                </a>
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-between">
+                <div class="align-self-end">작성자: {{ blog_post.author.first_name }}</div>
+                <div class="align-self-start">업데이트: {{ blog_post.date_updated|date:"Y년 m월 d일" }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% else %}
+
+<div class="container">
+    <div class="row">
+        <div class="card m-auto">
+            <div class="card-body mt-2 mb-2">
+                <h2 class="card-title">오피니언 게시판</h2>
+                <p class="card-text">업로드된 글이 없습니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
