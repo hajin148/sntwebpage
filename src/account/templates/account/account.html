@@ -171,6 +171,12 @@
         <h3 class="mb-3 font-weight-normal">내 포스트:</h3>
         {% if blog_posts %}
         <ul class="list-group">
+          <p><strong>공지사항:</strong></p>
+          {% for post in announce_posts %}
+          <a href="{% url 'announce:detail' post.slug %}" style="text-decoration: none;"><li class="list-group-item">{{post}}</li></a>
+          {% endfor %}
+          <br>
+          <p><strong>오피니언:</strong></p>
           {% for post in blog_posts %}
           <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none;"><li class="list-group-item">{{post}}</li></a>
           {% endfor %}

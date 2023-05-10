@@ -5,6 +5,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
 from blog.models import BlogPost
+from announce.models import BlogPost as AnnouncePost
 
 def registration_view(request):
 	context = {}
@@ -78,8 +79,9 @@ def account_view(request):
 
     context['account_form'] = form
     blog_posts = BlogPost.objects.filter(author=request.user)
-
-    context['blog_posts']= blog_posts
+    context['blog_posts'] = blog_posts
+    announce_posts = AnnouncePost.objects.filter(author=request.user)
+    context['announce_posts'] = announce_posts
     return render(request, 'account/account.html', context)
 
 
