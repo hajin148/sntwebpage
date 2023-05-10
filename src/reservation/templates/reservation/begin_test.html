@@ -1,0 +1,470 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center">
+	<h3>입반테스트 예약하기</h3>
+</div>
+<style>
+	.calendar {
+		width: 90%;
+		margin: auto;
+		padding-bottom: 50px;
+	}
+	
+	.calendar_header {
+		display: inline-block;
+	}
+	
+	.calendar_nav {
+		display: flex;
+		flex-grow: 0;
+		flex-shrink: 0;
+		justify-content: center;
+		align-items: center;
+		font-size: 50px;
+	}
+	
+	.nav-btn {
+		width: 28px;
+		height: 30px;
+		border: none;
+		font-size: 50px;
+		line-height: 34px;
+		margin: 0 20px;
+		background-color: transparent;
+		cursor: pointer;
+	}
+	
+	.go-today {
+		width: 80%;
+	}
+	
+	.calendar_main{
+		border-collapse: collapse;
+		width: 100%;
+	}
+	
+	.days {
+		display: flex;
+		margin: 25px 0 10px;
+	}
+	
+	.day {
+		width: calc(100% / 7);
+		text-align: center;
+		transition: all .3s;
+	}
+	
+	.dates {
+		display: flex;
+		flex-flow: row wrap;
+		border: 1px solid #33333341;
+	}
+	
+	.date {
+		cursor: pointer;
+		width: calc(100% / 7);
+		padding: 5% 1%;
+		/* text-align: left; */
+		text-align: center;
+		border: 1px solid #33333341;
+		transition: all .3s;
+	}
+	
+	.date-itm{
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.date_event{
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.event-itm{
+		display: block;
+		font-size: 15px;
+	}
+	
+	.day:nth-child(7n + 1),
+	.date:nth-child(7n + 1) {
+		color: #D13E3E;
+	}
+	
+	.day:nth-child(7n),
+	.date:nth-child(7n) {
+		color: #396EE2;
+	}
+	
+	.other {
+		color: rgba(88, 88, 88, 0.315) !important;
+	}
+	
+	.today {
+		position: relative;
+		background-color: #ff1c1c96;
+		color: #ffffff !important;
+	}
+	
+	.selected{
+		background-color: black;
+		color: #ffffff !important;
+	}
+	
+	
+	/* RESERVE TAB */
+	.resv-wrapper{
+		z-index: 10;
+		top: 0;
+		left: 0;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		background-color: #3333335b;
+		display: none;
+		justify-content: center;
+	}
+	
+	.resv-wrapper.open{
+		display: flex;
+	}
+	
+	.resv-bg{
+		width: 90%;
+		position: relative;
+		padding: 5% 5%;
+		background-color: #ffffff;
+		height: fit-content;
+		top: 50%;
+		transform: translateY(-50%);
+		border-radius: 20px;
+		font-size: 20px;
+	}
+	
+	.resv-close{
+		cursor: pointer;
+		font-size: 20px;
+		background-color: #ffffff;
+		text-align: right;
+		float: right;
+	}
+	
+	/* 예약인 리스트 */
+	.resv-list{
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 80%;
+		margin: auto;
+		font-size: 15px;
+	}
+	
+	.resv-list > p{
+		display: inline-block;
+		padding: 5px;
+		margin: 5px;
+		border: 2px solid var(--BG);
+	}
+	
+	.resv-event{
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 80%;
+		margin: auto;
+		font-size: 15px;
+	}
+	
+	.resv-event > p{
+		display: inline-block;
+		padding: 5px;
+		margin: 5px;
+		border: 2px solid var(--BG);
+	}
+	
+	.resv_set{
+		cursor: pointer;
+		width: 80%;
+		margin: auto;
+		margin-top: 10px;
+		font-size: 20px;
+	}
+	
+	.resv_btn{
+		cursor: pointer;
+		font-size: 18px;
+		width: 40%;
+		height: 30px;
+		margin-top: 20px;
+		padding: 5px 0px;
+	}
+	
+	@media screen and (max-width: 280px) {
+		
+		.calendar {
+			width: 90%;
+			margin: auto;
+			padding-bottom: 50px;
+		}
+		
+		
+		.calendar_nav {
+			font-size: 20px;
+		}
+		
+		.nav-btn {
+			font-size: 20px;
+		}
+		
+		.date_event{
+			display: block;
+			width: 10px;
+			height: 10px;
+			background: rgba(51, 51, 51, 0.2);
+			margin: auto;
+			border-radius: 100%;
+		}
+		
+		.event-itm{
+			font-size: 0;
+		}
+	}
+	
+	@media screen and (min-width: 280px) {
+		
+		.calendar {
+			width: 90%;
+			margin: auto;
+			padding-bottom: 50px;
+		}
+		
+		.calendar_nav {
+			font-size: 20px;
+		}
+		
+		.nav-btn {
+			font-size: 20px;
+		}
+		
+		.date_event{
+			display: block;
+			width: 10px;
+			height: 10px;
+			background: rgba(51, 51, 51, 0.2);
+			margin: auto;
+			border-radius: 100%;
+		}
+		
+		.event-itm{
+			font-size: 0;
+		}
+	}
+	
+	@media screen and (min-width: 600px) {
+		
+		.calendar {
+			width: 70%;
+			margin: auto;
+			padding-bottom: 50px;
+		}
+		
+		.date_event{
+			display: inline-block;
+			width: auto;
+			height: auto;
+			background: #ff8f8f00;
+			margin: auto;
+			padding-bottom: 0%;
+			border-radius: 0%;
+		}
+		
+		.event-itm{
+			font-size: 15px;
+		}
+		
+	}
+</style>
+
+<div class="calendar">
+	<div class="text-center">
+		<div class="calendar_header">
+			<div class="calendar_nav">
+				<button class="nav-btn go-prev">&lt;</button>
+				<span class="year"></span>년
+				<span class="month"></span>월
+				<!-- <button class="nav-btn go-today">오늘로 가기</button> -->
+				<button class="nav-btn go-next">&gt;</button>
+			</div>
+		</div>
+	</div>
+	<div class="calendar_main">
+		<div class="days">
+			<div class="day">일</div>
+			<div class="day">월</div>
+			<div class="day">화</div>
+			<div class="day">수</div>
+			<div class="day">목</div>
+			<div class="day">금</div>
+			<div class="day">토</div>
+		</div>
+		<div class="dates"></div>
+	</div>
+	
+	<!-- 예약 창 -->
+	<div class="resv-wrapper">
+		<div class="resv-bg">
+			<button class="resv-close">X</button>
+			<div class="resv_info">
+				<div class="resv_ym">
+					<!--클릭한 날짜 표기-->
+					<span class="resv-clicked-date"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<script>
+		const resvTab = document.querySelector('.resv-wrapper');
+		const exitBtn = document.querySelector('.resv-close');
+		exitBtn.addEventListener('click', ()=>{resvTab.classList.remove('open');});
+		
+		
+		// 날짜별로 이벤트 등록용 함수 및 변수
+		const selDate = []
+		const dateFunc = () => {
+			const dates = document.querySelectorAll('.date');
+			const year = document.querySelector('.year');
+			const month = document.querySelector('.month');
+			const clickedDateElement = document.querySelector('.resv-clicked-date');
+			
+			dates.forEach((i) => {
+				i.addEventListener('click', () => {
+					if (i.classList.contains('other') || i.classList.contains('selected')) {
+						dates.forEach((ig) => { ig.classList.remove('selected'); });
+						i.classList.remove('selected');
+						selDate.length = 0;
+					} else if (selDate.length > 0) {
+						dates.forEach((ig) => { ig.classList.remove('selected'); });
+						selDate.length = 0;
+						i.classList.add('selected');
+						selDate.push([year.innerHTML, month.innerHTML, i.innerHTML]);
+						resvTab.classList.add('open');
+					} else {
+						i.classList.add('selected');
+						selDate.push([year.innerHTML, month.innerHTML, i.innerHTML]);
+						resvTab.classList.add('open');
+					}
+					
+					// Update the reservation window's content with the clicked date
+					clickedDateElement.textContent = `${year.innerHTML}년 ${month.innerHTML}월 ${i.querySelector('.date-itm').innerHTML}일`;
+				});
+			});
+		};
+		
+		
+		// 초기화 함수 
+		const reset = ()=>{
+			selDate.length=0;
+			dateFunc();
+		}
+		
+		// 로드시 Nav 버튼들 이벤트 등록 및 초기화
+		window.onload=()=>{
+			const navBtn = document.querySelectorAll('.nav-btn');
+			navBtn.forEach(inf=>{
+				if(inf.classList.contains('go-prev')){
+					inf.addEventListener('click', ()=>{prevMonth(); reset();});
+				}else if(inf.classList.contains('go-today')){
+					inf.addEventListener('click', ()=>{goToday(); reset();});
+				}else if(inf.classList.contains('go-next')){
+					inf.addEventListener('click', ()=>{nextMonth(); reset();});
+				}
+			});
+			reset();
+		}
+	</script>
+	
+	<script>
+		let date = new Date();
+		
+		const renderCalender = () => {
+			const viewYear = date.getFullYear();
+			const viewMonth = date.getMonth();
+			
+			document.querySelector('.year').textContent = `${viewYear}`;
+			document.querySelector('.month').textContent = `${viewMonth + 1}`;
+			
+			const prevLast = new Date(viewYear, viewMonth, 0);
+			const thisLast = new Date(viewYear, viewMonth + 1, 0);
+			
+			const PLDate = prevLast.getDate();
+			const PLDay = prevLast.getDay();
+			
+			const TLDate = thisLast.getDate();
+			const TLDay = thisLast.getDay();
+			
+			const prevDates = [];
+			const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+			const nextDates = [];
+			
+			if (PLDay !== 6) {
+				for (let i = 0; i < PLDay + 1; i++) {
+					prevDates.unshift(PLDate - i);
+				}
+			}
+			
+			for (let i = 1; i < 7 - TLDay; i++) {
+				nextDates.push(i);
+			}
+			
+			const dates = prevDates.concat(thisDates, nextDates);
+			const firstDateIndex = dates.indexOf(1);
+			const lastDateIndex = dates.lastIndexOf(TLDate);
+			
+			dates.forEach((date, i) => {
+				const condition = i >= firstDateIndex && i < lastDateIndex + 1 ?
+				'this' :
+				'other';
+				dates[i] = `
+				<div class="date ${condition}">		
+					<div class="date-itm">${date}</div>
+					<div class="date_event">
+						<div class="event-itm"></div>
+					</div>
+				</div>
+				`;
+			});
+			
+			document.querySelector('.dates').innerHTML = dates.join('');
+			
+			const today = new Date();
+			if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+				for (let date of document.querySelectorAll('.date-itm')) {
+					if (+date.innerText === today.getDate()) {
+						date.parentNode.classList.add('today');
+						break;
+						
+					}
+				}
+			}
+		};
+		
+		renderCalender();
+		
+		const prevMonth = () => {
+			date.setMonth(date.getMonth() - 1);
+			renderCalender();
+		};
+		
+		const nextMonth = () => {
+			date.setMonth(date.getMonth() + 1);
+			renderCalender();
+		};
+		
+		const goToday = () => {
+			date = new Date();
+			renderCalender();
+		};
+	</script>
+	{% endblock content %}

@@ -84,11 +84,6 @@ def g3(request):
 	context['accounts'] = accounts
 	return render(request, "personal/schedule/g3.html", context)
 
-def begin_test_view(request):
-	context = {}
-	accounts = Account.objects.all()
-	context['accounts'] = accounts
-	return render(request, "personal/begin_test.html", context)
 
 def opinion_view(request):
 

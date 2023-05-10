@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'account',
     'blog',
     'announce',
+    'reservation',
 
     #Django apps
     'django.contrib.admin',
