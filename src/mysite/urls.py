@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 from reservation.views import (
     begin_test_view,
+    success
 )
 
 from personal.views import (
@@ -83,6 +84,8 @@ urlpatterns = [
     path('schedule/g3', g3, name="g3"),
 
     path('leveltest/', begin_test_view, name="leveltest"),
+    path('leveltest/success', success, name="success"),
+
 
     # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), 
