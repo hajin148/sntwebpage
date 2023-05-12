@@ -360,7 +360,7 @@
 						<strong><span class="resv-clicked-date"></span></strong>
 					</div>
 					<div class="text-center">
-						<br><br>
+						<br>
 						<form method="POST" action="{% url 'leveltest' %}">
 							{% csrf_token %}
 							{% for field in form %}
@@ -372,10 +372,9 @@
 								<p>{{ field.label_tag }} {{ field }}</p>
 								{% endif %}
 								{% endfor %}
-								<br><br>
+								<br>
 								<button type="submit" class="submit-button btn btn-lg btn-primary btn-block">예약하기</button>
 							</form>
-							
 						</div>
 					</div>
 				</div>
@@ -417,7 +416,7 @@
 			const resvTab = document.querySelector('.resv-wrapper');
 			const exitBtn = document.querySelector('.resv-close');
 			exitBtn.addEventListener('click', ()=>{resvTab.classList.remove('open');});
-			
+			var available_dates = JSON.parse('{{ available_dates|safe }}');
 			
 			// 날짜별로 이벤트 등록용 함수 및 변수
 			const selDate = []
@@ -429,35 +428,41 @@
 				
 				dates.forEach((i) => {
 					i.addEventListener('click', () => {
-						if (i.classList.contains('other') || i.classList.contains('selected')) {
-							dates.forEach((ig) => { ig.classList.remove('selected'); });
-							i.classList.remove('selected');
-							selDate.length = 0;
-						} else if (selDate.length > 0) {
-							dates.forEach((ig) => { ig.classList.remove('selected'); });
-							selDate.length = 0;
-							i.classList.add('selected');
+						const paddedMonth = (month.innerHTML.length === 1) ? `0${month.innerHTML}` : month.innerHTML;
+						const paddedDate = (i.innerHTML.length === 1) ? `0${i.innerHTML}` : i.innerHTML;
+						const dateItm = i.querySelector('.date-itm');
+						const paddedDateVal = (dateItm.textContent.length === 1) ? '0' + dateItm.textContent.trim() : dateItm.textContent.trim();
+						const selectedDate = '${year.innerHTML}-${paddedMonth}-${paddedDate}';
+						const selectedCheck = year.innerHTML + '-' + paddedMonth + '-' + paddedDateVal;
+
+						if (available_dates.includes(selectedCheck)) {
+							if (i.classList.contains('other') || i.classList.contains('selected')) {
+								dates.forEach((ig) => { ig.classList.remove('selected'); });
+								i.classList.remove('selected');
+								selDate.length = 0;
+							} else if (selDate.length > 0) {
+								dates.forEach((ig) => { ig.classList.remove('selected'); });
+								selDate.length = 0;
+								i.classList.add('selected');
+								
+								selDate.push([year.innerHTML, paddedMonth, paddedDate]);
+								resvTab.classList.add('open');
+							} else {
+								i.classList.add('selected');
+								
+								selDate.push([year.innerHTML, paddedMonth, paddedDate]);
+								resvTab.classList.add('open');
+							}
 							
-							const paddedMonth = (month.innerHTML.length === 1) ? `0${month.innerHTML}` : month.innerHTML;
-							const paddedDate = (i.innerHTML.length === 1) ? `0${i.innerHTML}` : i.innerHTML;
-							
-							selDate.push([year.innerHTML, paddedMonth, paddedDate]);
-							resvTab.classList.add('open');
+							// Update the reservation window's content with the clicked date
+							clickedDateElement.textContent = `${year.innerHTML}년 ${month.innerHTML.padStart(2, '0')}월 ${i.querySelector('.date-itm').innerHTML.padStart(2, '0')}일`;
 						} else {
-							i.classList.add('selected');
-							
-							const paddedMonth = (month.innerHTML.length === 1) ? `0${month.innerHTML}` : month.innerHTML;
-							const paddedDate = (i.innerHTML.length === 1) ? `0${i.innerHTML}` : i.innerHTML;
-							
-							selDate.push([year.innerHTML, paddedMonth, paddedDate]);
-							resvTab.classList.add('open');
+							alert('예약이 불가한 날짜입니다.');
 						}
-						
-						// Update the reservation window's content with the clicked date
-						clickedDateElement.textContent = `${year.innerHTML}년 ${month.innerHTML.padStart(2, '0')}월 ${i.querySelector('.date-itm').innerHTML.padStart(2, '0')}일`;
 					});
 				});
 			};
+			
 			
 			
 			

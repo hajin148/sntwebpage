@@ -5,7 +5,7 @@ class TimeOption(models.Model):
         verbose_name = '예약가능시간'
         verbose_name_plural = '예약가능시간'
     time = models.CharField(max_length=20)
-    capacity = models.IntegerField()
+    capacity = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.time} (Capacity: {self.capacity})"
@@ -15,7 +15,7 @@ class DateOptions(models.Model):
         verbose_name = '예약가능일'
         verbose_name_plural = '예약가능일'
 
-    date = models.DateField()
+    date = models.DateField(verbose_name="날짜")
     time_options = models.ManyToManyField(TimeOption)
 
     def __str__(self):
