@@ -1,22 +1,12 @@
 from django.db import models
 
-class TimeOption(models.Model):
-    class Meta:
-        verbose_name = '예약가능시간'
-        verbose_name_plural = '예약가능시간'
-    time = models.CharField(max_length=20)
-    capacity = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.time} (Capacity: {self.capacity})"
-
 class DateOptions(models.Model):
     class Meta:
         verbose_name = '예약가능일'
         verbose_name_plural = '예약가능일'
 
     date = models.DateField(verbose_name="날짜")
-    time_options = models.ManyToManyField(TimeOption)
+    capacity = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.date}"

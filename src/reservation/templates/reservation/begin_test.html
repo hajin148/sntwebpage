@@ -348,7 +348,16 @@
 		</div>
 		<div class="dates"></div>
 	</div>
-	
+	<div class="text-center">
+		<br><br>
+		<h5><strong>예약가능일:</strong></h5>
+		<br>
+		{% for date, capacity in date_capacity_pairs %}
+			{% if capacity > 0 %}
+				<p>{{ date }}</p>
+			{% endif %}
+		{% endfor %}
+	</div>
 	<!-- 예약 창 -->
 	<div class="resv-wrapper">
 		<div class="resv-bg">
@@ -417,6 +426,7 @@
 			const exitBtn = document.querySelector('.resv-close');
 			exitBtn.addEventListener('click', ()=>{resvTab.classList.remove('open');});
 			var available_dates = JSON.parse('{{ available_dates|safe }}');
+			var capacities = JSON.parse('{{ capacities|safe }}');
 			
 			// 날짜별로 이벤트 등록용 함수 및 변수
 			const selDate = []
@@ -435,7 +445,7 @@
 						const selectedDate = '${year.innerHTML}-${paddedMonth}-${paddedDate}';
 						const selectedCheck = year.innerHTML + '-' + paddedMonth + '-' + paddedDateVal;
 
-						if (available_dates.includes(selectedCheck)) {
+						if (available_dates.includes(selectedCheck) && capacities[available_dates.indexOf(selectedCheck)] > 0) {
 							if (i.classList.contains('other') || i.classList.contains('selected')) {
 								dates.forEach((ig) => { ig.classList.remove('selected'); });
 								i.classList.remove('selected');

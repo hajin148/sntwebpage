@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reservation.models import Reservation, DateOptions, TimeOption
+from reservation.models import Reservation, DateOptions
 
 class ReservationAdmin(admin.ModelAdmin):
     list_display = (
@@ -12,18 +12,9 @@ class ReservationAdmin(admin.ModelAdmin):
         'time',
     )
 
-class TimeOptionInline(admin.TabularInline):
-    model = DateOptions.time_options.through
-    extra = 1
-
 class DateOptionsAdmin(admin.ModelAdmin):
-    inlines = [TimeOptionInline]
-    list_display = ('date',)
-    exclude = ('time_options',)
+    list_display = ('date', 'capacity',)  # Add capacity field here
 
-class TimeOptionAdmin(admin.ModelAdmin):
-    list_display = ('time', 'capacity')
 
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(DateOptions, DateOptionsAdmin)
-admin.site.register(TimeOption, TimeOptionAdmin)
